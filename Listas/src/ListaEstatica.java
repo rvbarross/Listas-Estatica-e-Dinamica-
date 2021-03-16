@@ -1,6 +1,4 @@
-import java.io.IOException;
-
-public class ListaEstatica {
+public static class ListaEstatica {
     private Object v[];
     private int contador;
 
@@ -13,27 +11,35 @@ public class ListaEstatica {
         v = new Object[n];
     }
     public void adicionar(Object valor) {
-        if(contador < v.length){
-        v[contador] = valor;
-        contador++;
-        }else{
+        if(contador == v.length){
             Object aux[] = new Object[(int)(v.length * 1.5)];
             for (int i = 0; i < v.length; i++){
                 aux[i] = v[i];
             }
             v = aux;
         }
+        v[contador] = valor;
+        contador++;
     }
     public void adicionar(int posicao, Object valor) {
-        if (posicao <= contador) {
+        if (posicao <= contador && contador < v.length) {
             for (int i = contador; i > posicao; i--) {
                 v[i] = v[i - 1];
             }
             v[posicao] = valor;
             contador++;
-        }else{
-            System.out.println("Lamento, você não pode por a carroça na frente dos bois!!");
+        }else if(posicao == v.length){
+            Object aux[] = new Object[(int)(v.length * 1.5)];
+            for (int i = 0; i < v.length; i++){
+                aux[i] = v[i];
+            }
+            v = aux;
+            v[posicao] = valor;
+            contador++;
+        }else if(posicao > v.length){
+            System.out.println("Você não pode por a carroça na frente dos bois!!");
         }
+
     }
     public void remover(int posicao) {
         if(posicao < contador) {
